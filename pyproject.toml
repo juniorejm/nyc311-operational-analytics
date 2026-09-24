@@ -1,7 +1,7 @@
 [project]
 name = "nyc311-operational-analytics"
 version = "0.1.0"
-description = "Add your description here"
+description = "Riesgo de cierre tardío, pronóstico de volumen y pipeline sobre NYC 311"
 readme = "README.md"
 authors = [
     { name = "Junior Jimenez", email = "juniorelias049@gmail.com" }
@@ -10,7 +10,7 @@ requires-python = ">=3.12"
 dependencies = [
     "matplotlib>=3.11.2",
     "numpy>=2.5.3",
-    "pandas>=3.0.6",
+    "pandas>=2.2,<3",
     "python-dotenv>=1.2.3",
     "requests>=2.34.2",
     "scikit-learn>=1.9.1",
