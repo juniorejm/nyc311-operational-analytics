@@ -124,3 +124,40 @@ def descargar_mes(
     print(f"Guardado {ruta.name}: {len(df)} filas")
 
     return df
+
+
+def descargar_rango(
+    desde: str, hasta: str, complaint_type: str = "Noise - Residential"
+) -> dict[str, int]:
+    """Descarga varios meses seguidos llamando a `descargar_mes` y devuelve un
+    resumen de cuántas filas trajo cada mes.
+
+    Args:
+        desde (str): Primer mes a descargar, en formato "AAAA-MM" (incluido).
+        hasta (str): Último mes a descargar, en formato "AAAA-MM" (incluido).
+        complaint_type (str): Tipo de queja a filtrar. Por defecto es "Noise - Residential".
+
+    Returns:
+        dict[str, int]: Cantidad de filas por mes, por ejemplo
+        {"2025-01": 70837, "2025-02": ...}.
+
+    Raises:
+        ValueError: Si no se encuentra el token o si `desde` o `hasta` no tienen
+            el formato "AAAA-MM" (lo lanza pd.period_range).
+        requests.HTTPError: Si la API responde con un código de error (4xx/5xx).
+    """
+    resumen = {}
+
+    meses = pd.period_range(desde, hasta, freq="M")
+
+    for periodo in meses:
+        df = descargar_mes(periodo.year, periodo.month, complaint_type=complaint_type)
+        resumen[str(periodo)] = len(df)
+
+    return resumen
+
+
+if __name__ == "__main__":
+    resumen = descargar_rango("2025-01", "2025-12")
+    print(resumen)
+    print(f"Total: {sum(resumen.values())} filas")
