@@ -1,13 +1,9 @@
 import os
-from pathlib import Path
 
 import pandas as pd
 import requests
-from dotenv import load_dotenv
 
-RAW_DIR = Path(__file__).resolve().parents[2] / "data" / "raw"
-
-load_dotenv()
+from nyc311_operational_analytics.config import RAW_DIR
 
 URL = "https://data.cityofnewyork.us/resource/erm2-nwe9.json"
 
